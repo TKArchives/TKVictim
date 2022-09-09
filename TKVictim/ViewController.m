@@ -20,9 +20,21 @@
 @implementation ViewController
 
 - (IBAction)unlock:(id)sender {
-    BOOL unlocked = [CodedLock unlock:[self.code.text integerValue]];
-    self.unlock.hidden = unlocked;
-    self.lock.text = unlocked ? @"🔓" : @"🔒";
+    if ([CodedLock unlock:[self.code.text integerValue]]) {
+        [self unlocked];
+    } else {
+        [self locked];
+    }
+}
+
+- (void)locked {
+    self.unlock.hidden = NO;
+    self.lock.text = @"🔒";
+}
+
+- (void)unlocked {
+    self.unlock.hidden = YES;
+    self.lock.text = @"🔓";
 }
 
 @end
